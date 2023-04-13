@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Ajex Programming</title>
+        
+    </head>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" 
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+            crossorigin="anonymous"></script>
+    <body>
+        <div align="center">
+        <form method="POST" enctype="multipart/form-data" class="tform">
+            {% csrf_token %}
+            <input type="file" name="file" id="file"><br>
+            <input type="text" name="caption" id="caption">
+            <input type="button" name="next" class="submit" value="submit">
+        </form>
+        <h3>{{caption}}</h3>
+        </div>
+        <script>
+            $(document).ready(function(){
+                console.log("ok");
+
+            $('.submit').click(function(){
+                console.log("submitted");
+                var caption=$('.tform #caption').val();
+                var data=new FormData();
+                data.append("file",$("input[id^='file']")[0].files[0]);
+                data.append("csrfmiddlewaretoken","{{csrf_token}}");
+                data.append("caption",caption);
+                console.log(caption);
+            $.ajax({
+                url:"{% url 'upload' %}",
+                method:"POST",
+                processData:false,
+                contentType:false,
+                mimeType:"multipart/form-data",
+                data:data,
+                success:function(data){
+                    console.log("data sent");
+                }
+            });
+            });
+            });
+        </script>
+    </body>
+</html>

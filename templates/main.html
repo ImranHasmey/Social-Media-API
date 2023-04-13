@@ -1,0 +1,106 @@
+<html>
+    <style>
+        .nav{
+            background-color:white;
+            position:fixed;
+            padding-bottom:5px;
+            padding-top:10px;
+            box-shadow: 0 10px 25px rgba(92, 99, 105, .8); 
+            width:100%; 
+        }
+        .link1{
+            font-size:25px;
+        }
+        .link2{
+            font-size:20px;
+            margin-right:35px;
+        }
+       #container{
+        margin-left:700px;
+        margin-right:35px;
+       }
+       .box{
+        border-style:hidden;
+        border-radius:25px;
+        border-color:rgb(178, 175, 175);
+        width:510px;
+        background-color:white;
+       }
+       img{
+        width:500px;
+        height:400px;
+       }
+       .pro{
+        width:35px;
+        height:35px;
+        border-style:solid;
+        border-radius:30px;
+       }
+       body{
+        background: linear-gradient(to right, #83a4d4, #b6fbff); 
+       }
+       .search{
+        border-radius:25px;
+        margin-left:30px;
+        width:300px;
+        height:30px;
+        border-color:rgb(91, 165, 197);
+       }
+       #link:visited{
+          color:red;
+       }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <body>
+        <div class="nav">
+            <input class="search" type="text" placeholder="Search"><a href="#">Search</a>
+            <button id="container" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">upload pic</button>
+            <a class="link2" href="logout">Logout</a>
+            
+            <a href="profile/{{user_profile.user}}"><img class="pro" src="{{user_profile.profileimg.url}}" style="width:20px;height:20px;">
+            <font id="username"><b>{{user_profile.user}}</b></font>
+            </a>
+        </div>
+        <div class="body">
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <form action="imgupload" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  Image:<input type="file" name="image"><br>
+                  caption:<input type="text" name="caption">
+                  <button  type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <input type="submit" value="submit">
+                </form> 
+              </div>
+            </div>
+          </div>
+        <div style="padding-top:150px" align="center"></div>
+        <center>
+          {% for i in post %}
+          <div class="box">
+            <div style="float:left;padding-top:15px;padding-left:15px;padding-bottom:5px">
+            <a  href="profile/{{i.username}}"><img class="pro" src="{{i.profileimg.url}}"><b>@{{i.username}}</b></a><br>
+            </div>
+            <a href="{{i.img.url}}"><img src="{{i.img.url}}"></a>
+            <a id="link" href="/like_post?post_id={{i.id}}" style="padding-right:400px;padding-top:5px"><i class="fa fa-heart-o" style="font-size:24px;"></i></a>
+              <b>{% if i.likes == 0 %}
+              <p style="padding-right:350px">No likes</p>
+              {% elif i.likes == 1 %}
+              <p style="padding-right:350px">Liked by {{i.likes}} person</p>
+              {% else %}
+              <p style="padding-right:350px">Liked by {{i.likes}} people</p>
+              {% endif %}</b>
+            <hr>
+            <b style="padding-right:400px">{{i.username}}:</b>{{i.caption}}...<br>
+            {{i.date}}<br>
+          </div><br><br>
+          {% endfor %}
+        </center>
+        </div>
+    </div>
+    </body>
+</html>

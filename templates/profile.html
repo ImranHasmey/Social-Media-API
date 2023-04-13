@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>Profile - {{user_profile.user.username}}</title>
+    </head>
+    <style>
+        img{
+            width:200px;
+            height:200px;
+            border-style:hidden;
+            border-radius:100px;
+            border-width:1px;
+        }
+        .profile{
+            padding-left:400px;
+        }
+        .body{
+            padding-top:100px;
+        }
+        .details{
+            float:right;
+            padding-right:680px;
+        }
+        .image{
+            width:250px;
+            height:250px;
+            border-style:hidden;
+            border-radius:0px;
+        }
+        .post_back{
+            background: linear-gradient(to right, #8e9eab, #eef2f3);
+            padding-top:50px;
+            padding-bottom:50px;
+            border-style: hidden;
+            border-radius: 20px;
+            margin-top:50px;
+            margin-left:50px;
+            margin-right:50px;
+            
+        }
+        .vertical{
+            height:400px;
+            width:350px;
+            padding-top:30px;
+            padding-left:10px;
+            border-radius:20px;
+            float: left;
+            background: linear-gradient(to right, #8e9eab, #eef2f3);
+            color: black;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <body>
+        
+            <div class="vertical">
+                <font style="font-size:30px;padding-left:10px">𝓬𝓸𝓷𝓷𝓮𝓬𝓽</font>
+                <ul style="list-style-type:none">
+                    <font style="font-size:20px;color:black">
+                        <li><a href=""><i class="fa fa-home">  Home</i></a></li><br>
+                        <li><a href=""><i class="fa fa-search">  Search</i></a></li><br>
+                        <li><a href=""><i class="fa fa-commenting">  Messages</i></a></li><br>
+                        <li><a href=""><i class="fa fa-plus-square-o">  Upload</i></a></li><br>
+                        <li><a href=""><i class="fa fa-user">  Profile</i></a></li><br>
+                        <li><a href=""><i class="fa fa-cog">  Settings</i></a></li><br>
+                    </font>
+                </ul>
+            </div>
+            <div class="body">
+                <div class="profile">
+                    <img src="{{user_profile.profileimg.url}}">
+                    <div class="details">
+                        <font style="font-size:30px;">@{{user_profile.user}}</font><br>
+                        {% if post_length == 0 %}
+                        <p>No Posts</p>
+                        {% else %}
+                        <p>{{post_length}} Posts</p>
+                        {% endif %}
+                        <p>{{user_profile.bio}}</p>
+                    </div>
+                </div>
+                <hr style="margin-top:150px;margin-left:100px;margin-right:100px">
+                <div>
+                    <center>
+                    <div class="post_back">
+                        {% for i in user_posts %}
+                                <a href=""><img class="image" src="{{i.img.url}}"></a>
+                        {% endfor %}
+                    </div>
+                    <center>
+                </div>
+            </div>
+        
+</html>
